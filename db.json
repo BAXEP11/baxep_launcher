@@ -9,7 +9,7 @@
     { "code": "TESTKEY12345", "isBlocked": false, "isUsed": true, "usedBy": "admin" }
   ],
   "giveaway": {
-    "isActive": true,
+    "isActive": false,
     "startDate": "2026-05-01",
     "endDate": "2026-06-01"
   }
