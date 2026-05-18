@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BAXEP-LAUNCHER — Grand Theft Auto San Andreas</title>
     <style>
-        /* Стиль 2005-2010 годов: градиенты, обводки, шрифты без засечек, темная тема */
         * {
             margin: 0;
             padding: 0;
@@ -13,200 +12,309 @@
         }
 
         body {
-            background: #111113 url('https://www.transparenttextures.com/patterns/carbon-fiber.png');
-            font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
-            color: #e0e0e0;
+            background: #0b0c0d url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            font-family: "Arial Black", "Impact", sans-serif;
+            color: #f0f0f0;
             padding: 20px;
         }
 
-        /* Главный контейнер сайта фиксированной ширины (привет из 2008-го) */
         #wrapper {
             width: 960px;
             margin: 0 auto;
-            background: #1c1c22;
-            border: 3px solid #3a3a44;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
+            background: #141619;
+            border: 3px solid #2d3238;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
         }
 
-        /* Шапка сайта */
         header {
-            background: linear-gradient(to bottom, #2d2d35 0%, #15151a 100%);
-            padding: 25px;
-            border-bottom: 2px solid #3a3a44;
+            background: linear-gradient(to bottom, #1b1f24 0%, #0d0f12 100%);
+            padding: 30px;
+            border-bottom: 3px solid #1a723a; /* Grove Street Green */
             text-align: center;
+            position: relative;
         }
 
         header h1 {
             font-family: 'Impact', sans-serif;
-            font-size: 38px;
-            color: #00ff66;
-            text-shadow: 2px 2px 0px #000, 0 0 10px rgba(0, 255, 102, 0.4);
-            letter-spacing: 2px;
+            font-size: 46px;
+            color: #1a723a;
+            text-shadow: 3px 3px 0px #000;
+            letter-spacing: 3px;
         }
 
         header p {
-            font-size: 12px;
-            color: #8a8a9e;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+            color: #8a94a6;
             text-transform: uppercase;
             margin-top: 5px;
+            font-weight: bold;
         }
 
-        /* Контентная зона */
+        .user-panel-nav {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
+
+        .user-panel-nav a, .user-panel-nav span {
+            color: #ff9900;
+            text-decoration: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .user-panel-nav a:hover { text-decoration: underline; }
+
         .main-content {
-            padding: 30px;
+            padding: 25px;
             display: flex;
             gap: 25px;
         }
 
-        /* Левая колонка с постером */
         .media-box {
-            flex: 0 0 300px;
+            flex: 0 0 320px;
         }
 
         .poster {
             width: 100%;
-            border: 4px solid #2a2a35;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 4px solid #1a723a;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8);
             background: #000;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #555;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            /* Заглушка, если нет картинки */
-            background-image: linear-gradient(45deg, #1f1f26 25%, #252530 25%, #252530 50%, #1f1f26 50%, #1f1f26 75%, #252530 75%, #252530 100%);
-            background-size: 40px 40px;
+            height: 420px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Правая колонка с описанием игры */
+        .poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .screenshots {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .screenshots img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border: 2px solid #2d3238;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .screenshots img:hover {
+            border-color: #1a723a;
+        }
+
         .info-box {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .info-box h2 {
             font-family: 'Impact', sans-serif;
-            font-size: 28px;
+            font-size: 32px;
             color: #fff;
             margin-bottom: 15px;
-            border-bottom: 1px dashed #3a3a44;
+            border-bottom: 2px solid #2d3238;
             padding-bottom: 10px;
+            text-shadow: 2px 2px 0px #000;
         }
 
         .description {
+            font-family: Arial, sans-serif;
             font-size: 14px;
             line-height: 1.6;
-            color: #ccc;
-            margin-bottom: 25px;
-            background: #16161c;
-            padding: 15px;
-            border-left: 4px solid #00ff66;
-            border-radius: 4px;
-        }
-
-        /* Блок активации ключа */
-        .activation-zone {
-            background: linear-gradient(to bottom, #22222b 0%, #1a1a22 100%);
-            border: 1px solid #343442;
+            color: #d1d5db;
+            background: #0d0f12;
             padding: 20px;
-            border-radius: 6px;
-            box-shadow: inset 0 1px 3px rgba(255,255,255,0.1);
+            border-left: 5px solid #1a723a;
+            margin-bottom: 20px;
         }
 
-        .activation-zone h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
+        /* Блок раздачи информации */
+        .giveaway-status-bar {
+            background: #1f1408;
+            border: 1px solid #ff9900;
+            padding: 10px 15px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
             color: #ff9900;
-            text-transform: uppercase;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
             margin-bottom: 15px;
-        }
-
-        /* Олдскульные глянцевые инпуты и кнопки */
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            background: #0f0f12;
-            border: 1px solid #444454;
-            color: #fff;
-            font-family: monospace;
-            font-size: 16px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 3px;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #00ff66;
-            box-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+            display: none;
         }
 
         .btn {
-            padding: 12px 25px;
-            font-weight: bold;
+            font-family: 'Impact', sans-serif;
+            padding: 15px 30px;
+            font-size: 20px;
             text-transform: uppercase;
             cursor: pointer;
-            border-radius: 3px;
-            font-size: 14px;
-            transition: all 0.2s;
+            border: none;
+            box-shadow: 0 4px 0 #000;
+            transition: all 0.1s ease;
+            letter-spacing: 1px;
         }
 
-        .btn-get {
-            background: linear-gradient(to bottom, #ff9900 0%, #cc6600 100%);
-            border: 1px solid #ffaa22;
-            color: #fff;
-            text-shadow: 1px 1px 1px #000;
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #000;
         }
 
-        .btn-get:hover {
-            background: linear-gradient(to bottom, #ffaa22 0%, #ff7700 100%);
+        .btn-main-action {
+            background: #ff9900;
+            color: #000;
+            width: 100%;
         }
+
+        .btn-main-action:hover { background: #ffaa22; }
 
         .btn-download {
-            display: none; /* Скрыта по дефолту */
+            background: #1a723a;
+            color: #fff;
             width: 100%;
             text-align: center;
-            background: linear-gradient(to bottom, #00ff66 0%, #009933 100%);
-            border: 1px solid #33ff77;
-            color: #000;
-            font-size: 18px;
-            font-family: 'Impact', sans-serif;
-            letter-spacing: 1px;
             text-decoration: none;
-            padding: 15px;
-            box-shadow: 0 4px 10px rgba(0, 255, 102, 0.3);
-            margin-top: 10px;
+            display: none;
+            margin-top: 15px;
+        }
+        .btn-download:hover { background: #22994e; }
+
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
         }
 
-        .btn-download:hover {
-            background: linear-gradient(to bottom, #33ff77 0%, #00cc44 100%);
-            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.5);
+        .modal-window {
+            background: #141619;
+            border: 3px solid #1a723a;
+            width: 450px;
+            padding: 25px;
+            box-shadow: 0 0 20px #000;
         }
 
-        /* Статусные сообщения */
-        #status {
+        .modal-window h3 {
+            font-family: 'Impact', sans-serif;
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #2d3238;
+            padding-bottom: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #8a94a6;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            background: #0d0f12;
+            border: 2px solid #2d3238;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a723a;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .status-msg {
+            font-family: Arial, sans-serif;
             font-size: 13px;
+            margin-top: 10px;
             font-weight: bold;
-            margin-top: 5px;
         }
-        .error { color: #ff3333; }
-        .success { color: #00ff66; }
+        .err { color: #ff3333; }
+        .succ { color: #1a723a; }
 
-        /* Футер */
-        footer {
-            background: #121216;
+        /* Админка стили */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
+
+        .admin-block {
+            background: #0d0f12;
             padding: 15px;
+            border: 1px solid #2d3238;
+        }
+
+        .admin-block h4 {
+            color: #ff9900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .data-list {
+            max-height: 120px;
+            overflow-y: auto;
+            background: #141619;
+            padding: 5px;
+            border: 1px solid #2d3238;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #2d3238;
+        }
+
+        footer {
+            background: #0d0f12;
+            padding: 20px;
             text-align: center;
-            font-size: 11px;
-            color: #555566;
-            border-top: 1px solid #252530;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #4e5561;
+            border-top: 2px solid #2d3238;
         }
     </style>
 </head>
@@ -215,126 +323,415 @@
 <div id="wrapper">
     <header>
         <h1>BAXEP-LAUNCHER</h1>
-        <p>Игровой лаунчер нового поколения &copy; 2026</p>
+        <p>Официальная платформа дистрибуции игр</p>
+        <div class="user-panel-nav" id="nav-panel">
+            </div>
     </header>
 
+    <div class="giveaway-status-bar" id="giveaway-bar"></div>
+
     <div class="main-content">
-        <!-- Постер (сюда можно вставить тег img, если будет картинка) -->
         <div class="media-box">
             <div class="poster">
-                <div style="text-align: center; padding: 10px;">
-                    <span style="color: #00ff66; font-size: 24px; font-family: Impact;">GTA San Andreas</span><br>
-                    <span style="font-size: 11px; color: #888;">[ BOX ART PLACEHOLDER ]</span>
-                </div>
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co3v99.webp" alt="GTA SA Cover">
+            </div>
+            <div class="screenshots">
+                <img src="https://gta-max.com/_ld/11/71239846.jpg" alt="Screen 1" onclick="window.open(this.src)">
+                <img src="https://gta-max.com/_ld/11/48450146.jpg" alt="Screen 2" onclick="window.open(this.src)">
             </div>
         </div>
 
-        <!-- Описание и Активация -->
         <div class="info-box">
-            <h2>Grand Theft Auto: San Andreas</h2>
-            
-            <div class="description">
-                Пять лет назад Карл Джонсон бежал из Лос-Сантоса – города преступлений, наркотиков и коррупции, где даже кинозвезды и миллионеры вынуждены любыми способами защищаться от вымогателей и бандитов.<br><br>
-                Начало 1990-х годов. Карл возвращается домой. Его мать убита, семья распалась, друзья попали в беду, а против него самого выдвинуто сфабрикованное обвинение в убийстве.<br><br>
-                Чтобы вернуть близких и восстановить былые связи, Карл отправляется в опасное турне по Сан-Андреасу: он должен во что бы то ни стало завоевать улицы.
+            <div>
+                <h2>Grand Theft Auto: San Andreas</h2>
+                <div class="description">
+                    Пять лет назад Карл Джонсон бежал из Лос-Сантоса – города преступлений, наркотиков и коррупции. Начало 1990-х годов. Карл возвращается домой. Его мать убита, семья распалась, друзья попали в беду. Чтобы вернуть близких и восстановить былые связи, Карл отправляется в опасное турне по Сан-Андреасу.
+                </div>
             </div>
 
-            <div class="activation-zone">
-                <h3>Получить доступ к загрузке</h3>
-                <div class="input-group">
-                    <input type="text" id="key-input" maxlength="12" placeholder="Введите 12-значный ключ...">
-                    <button class="btn btn-get" onclick="verifyKey()">Получить</button>
-                </div>
-                <div id="status"></div>
-                
-                <!-- Ссылка-кнопка на скачивание лаунчера -->
-                <a href="baxep-launcher.zip" download id="download-btn" class="btn btn-download" onclick="registerDownload()">
-                    СКАЧАТЬ BAXEP-LAUNCHER.ZIP
-                </a>
+            <div>
+                <button class="btn btn-main-action" onclick="handleMainAction()">Получить игру</button>
+                <a href="baxep-launcher.zip" download id="download-link" class="btn btn-download">Скачать BAXEP-LAUNCHER.ZIP</a>
             </div>
         </div>
     </div>
 
     <footer>
-        BAXEP-LAUNCHER | Все права защищены. Разработано в стайле 2005-2010.
+        BAXEP-LAUNCHER &copy; 2026 | <a href="#" onclick="openModal('admin-modal')" style="color: #4e5561; text-decoration: none;">Админ-панель</a>
     </footer>
 </div>
 
+<div class="modal-overlay" id="auth-modal">
+    <div class="modal-window">
+        <h3 id="auth-title">Вход в аккаунт</h3>
+        <div class="form-group">
+            <label>Логин</label>
+            <input type="text" id="auth-user">
+        </div>
+        <div class="form-group">
+            <label>Пароль</label>
+            <input type="password" id="auth-pass">
+        </div>
+        <div id="auth-msg" class="status-msg"></div>
+        <div class="modal-actions">
+            <button class="btn btn-sm" onclick="closeModal('auth-modal')" style="background: #2d3238; color: #fff;">Отмена</button>
+            <button class="btn btn-sm" id="auth-toggle-btn" onclick="toggleAuthMode()" style="background: #141619; color: #ff9900; border: 1px solid #ff9900;">Регистрация</button>
+            <button class="btn btn-sm" id="auth-submit-btn" onclick="processAuth()" style="background: #1a723a; color: #fff;">Войти</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="key-modal">
+    <div class="modal-window">
+        <h3>Активация ключа доступа</h3>
+        <div class="form-group">
+            <label>Введите ваш 12-значный ключ</label>
+            <input type="text" id="key-input" maxlength="14" placeholder="XXXX-XXXX-XXXX" style="font-family: monospace; letter-spacing: 2px; text-transform: uppercase;">
+        </div>
+        <div id="key-msg" class="status-msg"></div>
+        <div class="modal-actions">
+            <button class="btn btn-sm" onclick="closeModal('key-modal')" style="background: #2d3238; color: #fff;">Закрыть</button>
+            <button class="btn btn-sm" onclick="processKeyActivation()" style="background: #ff9900; color: #000;">Активировать</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="admin-modal">
+    <div class="modal-window" style="width: 600px;">
+        <h3>Панель администратора</h3>
+        
+        <div id="admin-auth-zone">
+            <div class="form-group">
+                <label>Введите код доступа</label>
+                <input type="password" id="admin-code-input">
+            </div>
+            <button class="btn btn-sm" onclick="verifyAdminCode()" style="background: #ff9900; color: #000;">Войти</button>
+        </div>
+
+        <div id="admin-content-zone" style="display: none;">
+            <div class="admin-grid">
+                <div class="admin-block">
+                    <h4>Управление раздачей</h4>
+                    <label style="display:inline-block; margin-bottom: 5px;"><input type="checkbox" id="adm-giveaway-active"> Раздача активна</label>
+                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                        <input type="date" id="adm-giveaway-start" style="background:#000; border:1px solid #333; color:#fff; padding:3px;">
+                        <input type="date" id="adm-giveaway-end" style="background:#000; border:1px solid #333; color:#fff; padding:3px;">
+                    </div>
+                    <button class="btn btn-sm" onclick="saveAdminGiveaway()" style="background:#1a723a; color:#fff; margin-top:10px; font-size:11px; padding:5px 10px;">Сохранить даты</button>
+                </div>
+                
+                <div class="admin-block">
+                    <h4>Генерация и блокировка ключей</h4>
+                    <div style="display:flex; gap:5px; margin-bottom:10px;">
+                        <input type="text" id="adm-new-key" placeholder="Новый ключ" style="background:#000; border:1px solid #333; color:#fff; padding:5px; flex:1;">
+                        <button class="btn btn-sm" onclick="addAdminKey()" style="background:#1a723a; color:#fff; font-size:11px;">Добавить</button>
+                    </div>
+                    <div class="data-list" id="adm-keys-list"></div>
+                </div>
+
+                <div class="admin-block">
+                    <h4>Управление аккаунтами</h4>
+                    <div class="data-list" id="adm-users-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn btn-sm" onclick="closeModal('admin-modal')" style="background: #2d3238; color: #fff;">Закрыть</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // При загрузке страницы проверяем, не активировал ли этот ПК какой-то ключ ранее
+    // Первоначальный дамп БД (эмуляция структуры db.json)
+    const defaultDB = {
+        users: [
+            { username: "admin", password: "123", isBlocked: false, activatedKey: "TESTKEY12345" }
+        ],
+        keys: [
+            { code: "VCPR-1234-XYZ", isBlocked: false, isUsed: false, usedBy: null },
+            { code: "BAXEP-GTASA1", "isBlocked": false, isUsed: false, usedBy: null },
+            { code: "9999-8888-77", isBlocked: true, isUsed: false, usedBy: null },
+            { code: "TESTKEY12345", isBlocked: false, isUsed: true, usedBy: "admin" }
+        ],
+        giveaway: {
+            isActive: true,
+            startDate: "2026-05-01",
+            endDate: "2026-06-01"
+        }
+    };
+
+    let DB = JSON.parse(localStorage.getItem('baxep_db')) || defaultDB;
+    let currentUser = JSON.parse(sessionStorage.getItem('baxep_session')) || null;
+    let isRegisterMode = false;
+
+    function saveDB() {
+        localStorage.setItem('baxep_db', JSON.stringify(DB));
+    }
+
     window.onload = function() {
-        const savedKey = localStorage.getItem('activated_baxep_key');
-        if (savedKey) {
-            document.getElementById('key-input').value = savedKey;
-            document.getElementById('key-input').disabled = true;
-            document.querySelector('.btn-get').disabled = true;
+        saveDB(); // Гарантируем наличие структуры в хранилище
+        updateUI();
+    };
+
+    function updateUI() {
+        const nav = document.getElementById('nav-panel');
+        const downloadBtn = document.getElementById('download-link');
+        const giveawayBar = document.getElementById('giveaway-bar');
+
+        // Обновление плашки раздачи
+        if (DB.giveaway.isActive) {
+            giveawayBar.innerHTML = `ВНИМАНИЕ! Доступна временная раздача игры в период с ${DB.giveaway.startDate} по ${DB.giveaway.endDate}`;
+            giveawayBar.style.display = 'block';
+        } else {
+            giveawayBar.style.display = 'none';
+        }
+
+        if (currentUser) {
+            // Ищем актуальные данные юзера в БД на случай блокировки
+            const userInDb = DB.users.find(u => u.username === currentUser.username);
+            if (userInDb && userInDb.isBlocked) {
+                processLogout();
+                alert('Ваш аккаунт был заблокирован администрацией.');
+                return;
+            }
+
+            nav.innerHTML = `Вы вошли как: <span>${currentUser.username}</span> | <a onclick="processLogout()">Выйти</a>`;
             
-            const status = document.getElementById('status');
-            status.innerHTML = "<span class='success'>Доступ сохранен для этого устройства! Вы можете скачать файл снова.</span>";
-            document.getElementById('download-btn').style.display = 'block';
+            // Если у юзера активирован ключ или идет активная раздача — даем качать
+            if ((userInDb && userInDb.activatedKey) || checkGiveawayValid()) {
+                downloadBtn.style.display = 'block';
+            } else {
+                downloadBtn.style.display = 'none';
+            }
+        } else {
+            nav.innerHTML = `<a onclick="openAuthModal(false)">Вход</a> | <a onclick="openAuthModal(true)">Регистрация</a>`;
+            downloadBtn.style.display = 'none';
         }
     }
 
-    async function verifyKey() {
-        const keyInput = document.getElementById('key-input').value.trim();
-        const status = document.getElementById('status');
-        const downloadBtn = document.getElementById('download-btn');
+    function checkGiveawayValid() {
+        if (!DB.giveaway.isActive) return false;
+        const now = new Date();
+        const start = new Date(DB.giveaway.startDate);
+        const end = new Date(DB.giveaway.endDate);
+        return now >= start && now <= end;
+    }
 
-        // Базовая проверка длины на фронте
-        if (keyInput.length !== 12) {
-            status.innerHTML = "<span class='error'>Ошибка: Ключ должен состоять ровно из 12 символов!</span>";
+    // Логика главного действия при клике "Получить игру"
+    function handleMainAction() {
+        if (!currentUser) {
+            openAuthModal(false);
+            document.getElementById('auth-msg').innerHTML = "<span class='err'>Для получения игры необходимо авторизоваться!</span>";
             return;
         }
 
-        status.innerHTML = "<span>Проверка ключа...</span>";
+        // Если идет раздача, ключ вводить не обязательно
+        if (checkGiveawayValid()) {
+            alert('Сейчас действует глобальная раздача! Вы можете сразу скачивать лаунчер.');
+            updateUI();
+            return;
+        }
 
-        try {
-            // Стучимся к локальному файлу codes.json
-            const response = await fetch('codes.json');
-            if (!response.ok) {
-                throw new Error("Файл codes.json не найден");
-            }
-            const codes = await response.json();
+        const userInDb = DB.users.find(u => u.username === currentUser.username);
+        if (userInDb && userInDb.activatedKey) {
+            alert('У вас уже активирован ключ для этого аккаунта!');
+            return;
+        }
 
-            // Проверяем, есть ли такой ключ в массиве
-            // Формат codes.json ожидается как обычный массив: ["KEY123456789", "BBAXEP112233"]
-            if (codes.includes(keyInput)) {
-                
-                // Привязываем ключ к текущему браузеру
-                localStorage.setItem('pending_key', keyInput);
-                
-                status.innerHTML = "<span class='success'>Ключ верен! Нажмите на кнопку ниже, чтобы начать скачивание.</span>";
-                downloadBtn.style.display = 'block';
-            } else {
-                status.innerHTML = "<span class='error'>Ошибка: Неверный ключ или он уже был кем-то активирован!</span>";
-                downloadBtn.style.display = 'none';
-            }
+        openModal('key-modal');
+    }
 
-        } catch (error) {
-            console.error(error);
-            status.innerHTML = "<span class='error'>Ошибка: Не удалось загрузить базу ключей (codes.json). Убедись, что файл существует и сайт запущен через локальный сервер (Live Server).</span>";
+    // Модальные окна общие функции
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function openAuthModal(regMode) {
+        isRegisterMode = regMode;
+        openModal('auth-modal');
+        toggleAuthMode(regMode);
+    }
+
+    function toggleAuthMode(targetMode) {
+        if (targetMode !== undefined) isRegisterMode = targetMode;
+        else isRegisterMode = !isRegisterMode;
+
+        const title = document.getElementById('auth-title');
+        const submitBtn = document.getElementById('auth-submit-btn');
+        const toggleBtn = document.getElementById('auth-toggle-btn');
+        document.getElementById('auth-msg').innerHTML = '';
+
+        if (isRegisterMode) {
+            title.innerText = "Регистрация нового аккаунта";
+            submitBtn.innerText = "Создать";
+            toggleBtn.innerText = "Уже есть аккаунт?";
+        } else {
+            title.innerText = "Вход в аккаунт";
+            submitBtn.innerText = "Войти";
+            toggleBtn.innerText = "Регистрация";
         }
     }
 
-    function registerDownload() {
-        const pendingKey = localStorage.getItem('pending_key');
-        if (pendingKey) {
-            // Ключ окончательно закрепляется за юзером
-            localStorage.setItem('activated_baxep_key', pendingKey);
-            localStorage.removeItem('pending_key');
-            
-            // Блокируем инпуты, так как скачивание пошло
-            document.getElementById('key-input').disabled = true;
-            document.querySelector('.btn-get').disabled = true;
-            
-            /* 
-               ПРИМЕЧАНИЕ ДЛЯ РАЗРАБОТЧИКА (Для бэкенда на PHP):
-               Чтобы другие люди реально не могли ввести этот же ключ, здесь должен уходить 
-               POST/GET запрос на твой PHP-скрипт, который удалит этот ключ из файла codes.json.
-               Чистый HTML+JS без сервера сам перезаписать файл на диске не сможет.
-            */
-            document.getElementById('status').innerHTML = "<span class='success'>Скачивание началось! Ключ успешно привязан к вашему ПК.</span>";
+    // Авторизация и регистрация
+    function processAuth() {
+        const user = document.getElementById('auth-user').value.trim();
+        const pass = document.getElementById('auth-pass').value.trim();
+        const msg = document.getElementById('auth-msg');
+
+        if (!user || !pass) {
+            msg.innerHTML = "<span class='err'>Заполните все поля!</span>";
+            return;
         }
+
+        if (isRegisterMode) {
+            // Регистрация
+            if (DB.users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
+                msg.innerHTML = "<span class='err'>Пользователь с таким именем уже существует!</span>";
+                return;
+            }
+            DB.users.push({ username: user, password: pass, isBlocked: false, activatedKey: null });
+            saveDB();
+            msg.innerHTML = "<span class='succ'>Регистрация успешна! Войдите под своими данными.</span>";
+            toggleAuthMode(false);
+        } else {
+            // Вход
+            const foundUser = DB.users.find(u => u.username === user && u.password === pass);
+            if (!foundUser) {
+                msg.innerHTML = "<span class='err'>Неверный логин или пароль!</span>";
+                return;
+            }
+            if (foundUser.isBlocked) {
+                msg.innerHTML = "<span class='err'>Этот аккаунт заблокирован!</span>";
+                return;
+            }
+            currentUser = foundUser;
+            sessionStorage.setItem('baxep_session', JSON.stringify(currentUser));
+            closeModal('auth-modal');
+            updateUI();
+        }
+    }
+
+    function processLogout() {
+        currentUser = null;
+        sessionStorage.removeItem('baxep_session');
+        updateUI();
+    }
+
+    // Активация ключей
+    function processKeyActivation() {
+        const keyVal = document.getElementById('key-input').value.trim().toUpperCase();
+        const msg = document.getElementById('key-msg');
+
+        const keyIndex = DB.keys.findIndex(k => k.code === keyVal);
+
+        if (keyIndex === -1) {
+            msg.innerHTML = "<span class='err'>Ошибка: Ключ не существует!</span>";
+            return;
+        }
+
+        if (DB.keys[keyIndex].isBlocked) {
+            msg.innerHTML = "<span class='err'>Ошибка: Этот ключ заблокирован!</span>";
+            return;
+        }
+
+        if (DB.keys[keyIndex].isUsed) {
+            msg.innerHTML = "<span class='err'>Ошибка: Этот ключ уже активирован другим аккаунтом!</span>";
+            return;
+        }
+
+        // Привязываем ключ к юзеру
+        DB.keys[keyIndex].isUsed = true;
+        DB.keys[keyIndex].usedBy = currentUser.username;
+
+        const userIndex = DB.users.findIndex(u => u.username === currentUser.username);
+        DB.users[userIndex].activatedKey = keyVal;
+
+        saveDB();
+        msg.innerHTML = "<span class='succ'>Отлично! Ключ активирован, лаунчер доступен для скачивания.</span>";
+        setTimeout(() => {
+            closeModal('key-modal');
+            updateUI();
+        }, 1500);
+    }
+
+    // Админ-панель логика
+    function verifyAdminCode() {
+        const code = document.getElementById('admin-code-input').value;
+        if (code === "1234") {
+            document.getElementById('admin-auth-zone').style.display = 'none';
+            document.getElementById('admin-content-zone').style.display = 'block';
+            loadAdminData();
+        } else {
+            alert('Неверный код доступа!');
+        }
+    }
+
+    function loadAdminData() {
+        // Загрузка данных раздачи
+        document.getElementById('adm-giveaway-active').checked = DB.giveaway.isActive;
+        document.getElementById('adm-giveaway-start').value = DB.giveaway.startDate;
+        document.getElementById('adm-giveaway-end').value = DB.giveaway.endDate;
+
+        // Рендер ключей
+        const keysList = document.getElementById('adm-keys-list');
+        keysList.innerHTML = '';
+        DB.keys.forEach((k, index) => {
+            keysList.innerHTML += `
+                <div class="data-item">
+                    <span>${k.code} ${k.isUsed ? `(Использован: ${k.usedBy})` : '(Свободен)'} ${k.isBlocked ? '❌ [БЛОК]' : ''}</span>
+                    <button onclick="toggleBlockKey(${index})" style="background:#cc3333; color:#fff; font-size:10px; border:none; padding:2px 5px; cursor:pointer;">
+                        ${k.isBlocked ? 'Разблок' : 'Блок'}
+                    </button>
+                </div>
+            `;
+        });
+
+        // Рендер юзеров
+        const usersList = document.getElementById('adm-users-list');
+        usersList.innerHTML = '';
+        DB.users.forEach((u, index) => {
+            if (u.username === 'admin') return; // Себя не трогаем
+            usersList.innerHTML += `
+                <div class="data-item">
+                    <span>${u.username} ${u.activatedKey ? `🔑` : 'Нет ключа'} ${u.isBlocked ? '❌ [БАН]' : ''}</span>
+                    <button onclick="toggleBlockUser(${index})" style="background:#cc3333; color:#fff; font-size:10px; border:none; padding:2px 5px; cursor:pointer;">
+                        ${u.isBlocked ? 'Разбанить' : 'Бан'}
+                    </button>
+                </div>
+            `;
+        });
+    }
+
+    function saveAdminGiveaway() {
+        DB.giveaway.isActive = document.getElementById('adm-giveaway-active').checked;
+        DB.giveaway.startDate = document.getElementById('adm-giveaway-start').value;
+        DB.giveaway.endDate = document.getElementById('adm-giveaway-end').value;
+        saveDB();
+        updateUI();
+        alert('Параметры раздачи обновлены!');
+    }
+
+    function addAdminKey() {
+        const input = document.getElementById('adm-new-key');
+        const code = input.value.trim().toUpperCase();
+        if (!code) return;
+        DB.keys.push({ code: code, isBlocked: false, isUsed: false, usedBy: null });
+        saveDB();
+        input.value = '';
+        loadAdminData();
+    }
+
+    function toggleBlockKey(index) {
+        DB.keys[index].isBlocked = !DB.keys[index].isBlocked;
+        saveDB();
+        loadAdminData();
+    }
+
+    function toggleBlockUser(index) {
+        DB.users[index].isBlocked = !DB.users[index].isBlocked;
+        saveDB();
+        loadAdminData();
+        updateUI();
     }
 </script>
 
