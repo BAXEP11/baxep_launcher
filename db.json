@@ -1,0 +1,16 @@
+{
+  "users": [
+    { "username": "admin", "password": "123", "isBlocked": false, "activatedKey": "TESTKEY12345" }
+  ],
+  "keys": [
+    { "code": "VCPR-1234-XYZ", "isBlocked": false, "isUsed": false, "usedBy": null },
+    { "code": "BAXEP-GTASA1", "isBlocked": false, "isUsed": false, "usedBy": null },
+    { "code": "9999-8888-77", "isBlocked": true, "isUsed": false, "usedBy": null },
+    { "code": "TESTKEY12345", "isBlocked": false, "isUsed": true, "usedBy": "admin" }
+  ],
+  "giveaway": {
+    "isActive": true,
+    "startDate": "2026-05-01",
+    "endDate": "2026-06-01"
+  }
+}
