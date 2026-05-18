@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BAXEP-LAUNCHER — Grand Theft Auto San Andreas</title>
+    <title>BAXEP-LAUNCHER — Distribution Platform</title>
     <style>
         * {
             margin: 0;
@@ -16,6 +16,7 @@
             font-family: "Arial Black", "Impact", sans-serif;
             color: #f0f0f0;
             padding: 20px;
+            padding-bottom: 80px; /* Отступ для баннера блокировки */
         }
 
         #wrapper {
@@ -24,11 +25,12 @@
             background: #141619;
             border: 3px solid #2d3238;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+            position: relative;
         }
 
         header {
             background: linear-gradient(to bottom, #1b1f24 0%, #0d0f12 100%);
-            padding: 30px;
+            padding: 35px;
             border-bottom: 3px solid #1a723a; /* Grove Street Green */
             text-align: center;
             position: relative;
@@ -36,7 +38,7 @@
 
         header h1 {
             font-family: 'Impact', sans-serif;
-            font-size: 46px;
+            font-size: 48px;
             color: #1a723a;
             text-shadow: 3px 3px 0px #000;
             letter-spacing: 3px;
@@ -142,7 +144,6 @@
             margin-bottom: 20px;
         }
 
-        /* Блок раздачи информации */
         .giveaway-status-bar {
             background: #1f1408;
             border: 1px solid #ff9900;
@@ -154,41 +155,74 @@
             display: none;
         }
 
+        /* Зона кнопок и макета раздачи */
+        .action-container {
+            position: relative;
+            width: 100%;
+        }
+
         .btn {
             font-family: 'Impact', sans-serif;
-            padding: 15px 30px;
-            font-size: 20px;
+            padding: 18px 30px;
+            font-size: 22px;
             text-transform: uppercase;
             cursor: pointer;
             border: none;
             box-shadow: 0 4px 0 #000;
             transition: all 0.1s ease;
             letter-spacing: 1px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
         }
 
-        .btn:active {
+        .btn:active:not(:disabled) {
             transform: translateY(4px);
             box-shadow: 0 0 0 #000;
         }
 
-        .btn-main-action {
-            background: #ff9900;
-            color: #000;
-            width: 100%;
+        .btn:disabled {
+            background: #222 !important;
+            color: #555 !important;
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
-        .btn-main-action:hover { background: #ffaa22; }
+        /* Кнопка "Получить" из концепта */
+        .btn-main-action {
+            background: #ff6600;
+            color: #fff;
+            text-shadow: 2px 2px 0px #000;
+        }
+        .btn-main-action:hover:not(:disabled) { background: #ff7711; }
 
+        /* Полупрозрачный шильдик "РАЗДАЧА!" поверх кнопки */
+        .badge-giveaway {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: rgba(26, 114, 58, 0.9);
+            color: #fff;
+            font-family: 'Impact', sans-serif;
+            padding: 5px 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            border: 2px solid #22994e;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            transform: rotate(2deg);
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Кнопка "Скачать" */
         .btn-download {
             background: #1a723a;
             color: #fff;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
+            text-shadow: 2px 2px 0px #000;
             display: none;
-            margin-top: 15px;
         }
-        .btn-download:hover { background: #22994e; }
+        .btn-download:hover:not(:disabled) { background: #22994e; }
 
         /* Модальные окна */
         .modal-overlay {
@@ -233,7 +267,7 @@
             text-transform: uppercase;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
             background: #0d0f12;
@@ -269,7 +303,7 @@
         .err { color: #ff3333; }
         .succ { color: #1a723a; }
 
-        /* Админка стили */
+        /* Админка */
         .admin-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -303,6 +337,7 @@
         .data-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 5px 0;
             border-bottom: 1px solid #2d3238;
         }
@@ -316,16 +351,34 @@
             color: #4e5561;
             border-top: 2px solid #2d3238;
         }
+
+        /* Красный фулл-скрин баннер блокировки из концепта */
+        .ban-global-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ff0000;
+            color: #ffffff;
+            text-align: center;
+            padding: 16px;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
 <div id="wrapper">
     <header>
-        <h1>BAXEP-LAUNCHER</h1>
+        <h1>baxep-launcher</h1>
         <p>Официальная платформа дистрибуции игр</p>
-        <div class="user-panel-nav" id="nav-panel">
-            </div>
+        <div class="user-panel-nav" id="nav-panel"></div>
     </header>
 
     <div class="giveaway-status-bar" id="giveaway-bar"></div>
@@ -349,16 +402,21 @@
                 </div>
             </div>
 
-            <div>
-                <button class="btn btn-main-action" onclick="handleMainAction()">Получить игру</button>
+            <div class="action-container">
+                <button id="main-action-btn" class="btn btn-main-action" onclick="handleMainAction()">Получить игру</button>
+                <div id="badge-giveaway" class="badge-giveaway">РАЗДАЧА!</div>
                 <a href="baxep-launcher.zip" download id="download-link" class="btn btn-download">Скачать BAXEP-LAUNCHER.ZIP</a>
             </div>
         </div>
     </div>
 
     <footer>
-        BAXEP-LAUNCHER &copy; 2026 | <a href="#" onclick="openModal('admin-modal')" style="color: #4e5561; text-decoration: none;">Админ-панель</a>
+        BAXEP-LAUNCHER &copy; 2026 | <a id="admin-panel-link" href="#" onclick="openModal('admin-modal')" style="color: #4e5561; text-decoration: none; display: none;">Админ-панель</a>
     </footer>
+</div>
+
+<div id="global-ban-bar" class="ban-global-bar">
+    Аккаунт заблокирован. Причина: <span id="ban-reason-text">/???ewp</span>
 </div>
 
 <div class="modal-overlay" id="auth-modal">
@@ -386,7 +444,7 @@
         <h3>Активация ключа доступа</h3>
         <div class="form-group">
             <label>Введите ваш 12-значный ключ</label>
-            <input type="text" id="key-input" maxlength="14" placeholder="XXXX-XXXX-XXXX" style="font-family: monospace; letter-spacing: 2px; text-transform: uppercase;">
+            <input type="text" id="key-input" placeholder="XXXX-XXXX-XXXX" style="font-family: monospace; letter-spacing: 2px; text-transform: uppercase;">
         </div>
         <div id="key-msg" class="status-msg"></div>
         <div class="modal-actions">
@@ -400,28 +458,20 @@
     <div class="modal-window" style="width: 600px;">
         <h3>Панель администратора</h3>
         
-        <div id="admin-auth-zone">
-            <div class="form-group">
-                <label>Введите код доступа</label>
-                <input type="password" id="admin-code-input">
-            </div>
-            <button class="btn btn-sm" onclick="verifyAdminCode()" style="background: #ff9900; color: #000;">Войти</button>
-        </div>
-
-        <div id="admin-content-zone" style="display: none;">
+        <div id="admin-content-zone">
             <div class="admin-grid">
                 <div class="admin-block">
                     <h4>Управление раздачей</h4>
                     <label style="display:inline-block; margin-bottom: 5px;"><input type="checkbox" id="adm-giveaway-active"> Раздача активна</label>
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
-                        <input type="date" id="adm-giveaway-start" style="background:#000; border:1px solid #333; color:#fff; padding:3px;">
-                        <input type="date" id="adm-giveaway-end" style="background:#000; border:1px solid #333; color:#fff; padding:3px;">
+                        <input type="date" id="adm-giveaway-start">
+                        <input type="date" id="adm-giveaway-end">
                     </div>
-                    <button class="btn btn-sm" onclick="saveAdminGiveaway()" style="background:#1a723a; color:#fff; margin-top:10px; font-size:11px; padding:5px 10px;">Сохранить даты</button>
+                    <button class="btn btn-sm" onclick="saveAdminGiveaway()" style="background:#1a723a; color:#fff; margin-top:10px; font-size:11px; padding:5px 10px;">Сохранить параметры</button>
                 </div>
                 
                 <div class="admin-block">
-                    <h4>Генерация и блокировка ключей</h4>
+                    <h4>Генерация ключей</h4>
                     <div style="display:flex; gap:5px; margin-bottom:10px;">
                         <input type="text" id="adm-new-key" placeholder="Новый ключ" style="background:#000; border:1px solid #333; color:#fff; padding:5px; flex:1;">
                         <button class="btn btn-sm" onclick="addAdminKey()" style="background:#1a723a; color:#fff; font-size:11px;">Добавить</button>
@@ -442,75 +492,134 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="ban-edit-modal" style="z-index: 1100;">
+    <div class="modal-window">
+        <h3>Управление блокировкой</h3>
+        <input type="hidden" id="ban-edit-index">
+        <div class="form-group">
+            <label>Статус</label>
+            <select id="ban-edit-status">
+                <option value="false">Активен (Разбанен)</option>
+                <option value="true">Заблокирован (Бан)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Причина бана</label>
+            <input type="text" id="ban-edit-reason" placeholder="Укажите причину...">
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-sm" onclick="closeModal('ban-edit-modal')" style="background: #2d3238; color: #fff;">Отмена</button>
+            <button class="btn btn-sm" onclick="saveUserBanStatus()" style="background: #cc3333; color: #fff;">Сохранить</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Первоначальный дамп БД (эмуляция структуры db.json)
-  const defaultDB = {
+    /* Изолированное хранилище ядра данных (Имитация db.json).
+       В продакшене этот блок полностью заменяется обычными асинхронными fetch фетчами к бэкенду.
+    */
+    const initialMockDatabase = {
         users: [
-           { username: "admin", password: "123", isBlocked: false, activatedKey: "TESTKEY12345" }
+            { username: "admin", password: "123", isAdmin: true, isBlocked: false, banReason: "", activatedKey: "TESTKEY12345" },
+            { username: "kent", password: "111", isAdmin: false, isBlocked: false, banReason: "", activatedKey: null }
         ],
         keys: [
             { code: "VCPR-1234-XYZ", isBlocked: false, isUsed: false, usedBy: null },
-           { code: "BAXEP-GTASA1", "isBlocked": false, isUsed: false, usedBy: null },
-           { code: "9999-8888-77", isBlocked: true, isUsed: false, usedBy: null },
-          { code: "TESTKEY12345", isBlocked: false, isUsed: true, usedBy: "admin" }
+            { code: "BAXEP-GTASA1", isBlocked: false, isUsed: false, usedBy: null },
+            { code: "9999-8888-77", isBlocked: true, isUsed: false, usedBy: null },
+            { code: "TESTKEY12345", isBlocked: false, isUsed: true, usedBy: "admin" }
         ],
-       giveaway: {
-           isActive: false,
-         startDate: "2026-05-01",
-           endDate: "2026-06-01"
+        giveaway: {
+            isActive: false,
+            startDate: "2026-05-01",
+            endDate: "2026-06-01"
         }
     };
 
-    let DB = JSON.parse(localStorage.getItem('baxep_db')) || defaultDB;
+    // Чтение/Запись состояния в хранилище без выноса структуры в сырой HTML код
+    function getDB() {
+        if(!localStorage.getItem('baxep_secure_db')) {
+            localStorage.setItem('baxep_secure_db', JSON.stringify(initialMockDatabase));
+        }
+        return JSON.parse(localStorage.getItem('baxep_secure_db'));
+    }
+
+    function saveDB(data) {
+        localStorage.setItem('baxep_secure_db', JSON.stringify(data));
+    }
+
     let currentUser = JSON.parse(sessionStorage.getItem('baxep_session')) || null;
     let isRegisterMode = false;
 
-    function saveDB() {
-        localStorage.setItem('baxep_db', JSON.stringify(DB));
-    }
-
     window.onload = function() {
-        saveDB(); // Гарантируем наличие структуры в хранилище
         updateUI();
     };
 
     function updateUI() {
+        const DB = getDB();
         const nav = document.getElementById('nav-panel');
-        const downloadBtn = document.getElementById('download-link');
+        const mainActionBtn = document.getElementById('main-action-btn');
+        const downloadLink = document.getElementById('download-link');
+        const badgeGiveaway = document.getElementById('badge-giveaway');
         const giveawayBar = document.getElementById('giveaway-bar');
+        const adminPanelLink = document.getElementById('admin-panel-link');
+        const globalBanBar = document.getElementById('global-ban-bar');
+        const banReasonText = document.getElementById('ban-reason-text');
 
-        // Обновление плашки раздачи
+        // Сброс видимости элементов управления
+        globalBanBar.style.display = 'none';
+        adminPanelLink.style.display = 'none';
+        badgeGiveaway.style.display = 'none';
+        mainActionBtn.style.display = 'block';
+        mainActionBtn.disabled = false;
+        downloadLink.style.display = 'none';
+
+        // Проверка параметров глобальной раздачи
         if (DB.giveaway.isActive) {
             giveawayBar.innerHTML = `ВНИМАНИЕ! Доступна временная раздача игры в период с ${DB.giveaway.startDate} по ${DB.giveaway.endDate}`;
             giveawayBar.style.display = 'block';
+            badgeGiveaway.style.display = 'block'; // Показываем шильдик над кнопкой
         } else {
             giveawayBar.style.display = 'none';
         }
 
         if (currentUser) {
-            // Ищем актуальные данные юзера в БД на случай блокировки
-            const userInDb = DB.users.find(u => u.username === currentUser.username);
-            if (userInDb && userInDb.isBlocked) {
-                processLogout();
-                alert('Ваш аккаунт был заблокирован администрацией.');
-                return;
-            }
-
-            nav.innerHTML = `Вы вошли как: <span>${currentUser.username}</span> | <a onclick="processLogout()">Выйти</a>`;
+            // Сверяем сессию с актуальным состоянием базы данных
+            const dbUser = DB.users.find(u => u.username === currentUser.username);
             
-            // Если у юзера активирован ключ или идет активная раздача — даем качать
-            if ((userInDb && userInDb.activatedKey) || checkGiveawayValid()) {
-                downloadBtn.style.display = 'block';
-            } else {
-                downloadBtn.style.display = 'none';
+            if (dbUser) {
+                // Если пользователь забанен
+                if (dbUser.isBlocked) {
+                    banReasonText.innerText = dbUser.banReason || "Нарушение правил платформы.";
+                    globalBanBar.style.display = 'block';
+                    
+                    // Полная блокировка интерфейса скачивания
+                    mainActionBtn.disabled = true;
+                    mainActionBtn.innerText = "Доступ заблокирован";
+                    downloadLink.style.display = 'none';
+                    nav.innerHTML = `Вы вошли как: <span style="color:red;">${currentUser.username} (ЗАБАНЕН)</span> | <a onclick="processLogout()">Выйти</a>`;
+                    return;
+                }
+
+                // Отображение панели админа, если параметр isAdmin равен true
+                if (dbUser.isAdmin) {
+                    adminPanelLink.style.display = 'inline-block';
+                }
+
+                nav.innerHTML = `Вы вошли как: <span>${currentUser.username}</span> | <a onclick="processLogout()">Выйти</a>`;
+
+                // Проверяем, открыт ли доступ (куплен ключ или идет активная раздача)
+                if (dbUser.activatedKey || checkGiveawayValid(DB)) {
+                    mainActionBtn.style.display = 'none'; // Скрываем "Получить" по макету
+                    downloadLink.style.display = 'block'; // Показываем кнопку "Скачать"
+                }
             }
         } else {
             nav.innerHTML = `<a onclick="openAuthModal(false)">Вход</a> | <a onclick="openAuthModal(true)">Регистрация</a>`;
-            downloadBtn.style.display = 'none';
         }
     }
 
-    function checkGiveawayValid() {
+    function checkGiveawayValid(DB) {
         if (!DB.giveaway.isActive) return false;
         const now = new Date();
         const start = new Date(DB.giveaway.startDate);
@@ -518,31 +627,29 @@
         return now >= start && now <= end;
     }
 
-    // Логика главного действия при клике "Получить игру"
     function handleMainAction() {
+        const DB = getDB();
         if (!currentUser) {
             openAuthModal(false);
-            document.getElementById('auth-msg').innerHTML = "<span class='err'>Для получения игры необходимо авторизоваться!</span>";
+            document.getElementById('auth-msg').innerHTML = "<span class='err'>Авторизуйтесь, чтобы забрать игру!</span>";
             return;
         }
 
-        // Если идет раздача, ключ вводить не обязательно
-        if (checkGiveawayValid()) {
-            alert('Сейчас действует глобальная раздача! Вы можете сразу скачивать лаунчер.');
+        if (checkGiveawayValid(DB)) {
+            alert('Раздача активна! Игра привязана к вашему профилю. Можно скачивать!');
             updateUI();
             return;
         }
 
-        const userInDb = DB.users.find(u => u.username === currentUser.username);
-        if (userInDb && userInDb.activatedKey) {
-            alert('У вас уже активирован ключ для этого аккаунта!');
+        const dbUser = DB.users.find(u => u.username === currentUser.username);
+        if (dbUser && dbUser.activatedKey) {
+            alert('Игра уже на вашем аккаунте!');
             return;
         }
 
         openModal('key-modal');
     }
 
-    // Модальные окна общие функции
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
@@ -572,36 +679,30 @@
         }
     }
 
-    // Авторизация и регистрация
     function processAuth() {
         const user = document.getElementById('auth-user').value.trim();
         const pass = document.getElementById('auth-pass').value.trim();
         const msg = document.getElementById('auth-msg');
+        let DB = getDB();
 
         if (!user || !pass) {
-            msg.innerHTML = "<span class='err'>Заполните все поля!</span>";
+            msg.innerHTML = "<span class='err'>Заполните поля!</span>";
             return;
         }
 
         if (isRegisterMode) {
-            // Регистрация
             if (DB.users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
-                msg.innerHTML = "<span class='err'>Пользователь с таким именем уже существует!</span>";
+                msg.innerHTML = "<span class='err'>Имя аккаунта занято!</span>";
                 return;
             }
-            DB.users.push({ username: user, password: pass, isBlocked: false, activatedKey: null });
-            saveDB();
-            msg.innerHTML = "<span class='succ'>Регистрация успешна! Войдите под своими данными.</span>";
+            DB.users.push({ username: user, password: pass, isAdmin: false, isBlocked: false, banReason: "", activatedKey: null });
+            saveDB(DB);
+            msg.innerHTML = "<span class='succ'>Готово! Войдите под своими данными.</span>";
             toggleAuthMode(false);
         } else {
-            // Вход
             const foundUser = DB.users.find(u => u.username === user && u.password === pass);
             if (!foundUser) {
                 msg.innerHTML = "<span class='err'>Неверный логин или пароль!</span>";
-                return;
-            }
-            if (foundUser.isBlocked) {
-                msg.innerHTML = "<span class='err'>Этот аккаунт заблокирован!</span>";
                 return;
             }
             currentUser = foundUser;
@@ -617,119 +718,130 @@
         updateUI();
     }
 
-    // Активация ключей
     function processKeyActivation() {
         const keyVal = document.getElementById('key-input').value.trim().toUpperCase();
         const msg = document.getElementById('key-msg');
+        let DB = getDB();
 
         const keyIndex = DB.keys.findIndex(k => k.code === keyVal);
 
         if (keyIndex === -1) {
-            msg.innerHTML = "<span class='err'>Ошибка: Ключ не существует!</span>";
+            msg.innerHTML = "<span class='err'>Ключ не существует!</span>";
             return;
         }
-
         if (DB.keys[keyIndex].isBlocked) {
-            msg.innerHTML = "<span class='err'>Ошибка: Этот ключ заблокирован!</span>";
+            msg.innerHTML = "<span class='err'>Этот ключ заблокирован!</span>";
             return;
         }
-
         if (DB.keys[keyIndex].isUsed) {
-            msg.innerHTML = "<span class='err'>Ошибка: Этот ключ уже активирован другим аккаунтом!</span>";
+            msg.innerHTML = "<span class='err'>Ключ уже активирован на другом аккаунте!</span>";
             return;
         }
 
-        // Привязываем ключ к юзеру
         DB.keys[keyIndex].isUsed = true;
         DB.keys[keyIndex].usedBy = currentUser.username;
 
         const userIndex = DB.users.findIndex(u => u.username === currentUser.username);
         DB.users[userIndex].activatedKey = keyVal;
 
-        saveDB();
-        msg.innerHTML = "<span class='succ'>Отлично! Ключ активирован, лаунчер доступен для скачивания.</span>";
+        saveDB(DB);
+        msg.innerHTML = "<span class='succ'>Ключ успешно привязан к профилю!</span>";
         setTimeout(() => {
             closeModal('key-modal');
             updateUI();
-        }, 1500);
+        }, 1200);
     }
 
-    // Админ-панель логика
-    function verifyAdminCode() {
-        const code = document.getElementById('admin-code-input').value;
-        if (code === "1234") {
-            document.getElementById('admin-auth-zone').style.display = 'none';
-            document.getElementById('admin-content-zone').style.display = 'block';
-            loadAdminData();
-        } else {
-            alert('Неверный код доступа!');
-        }
-    }
-
+    /* Админ-панель (Вызывается только если у авторизованного юзера isAdmin === true) */
     function loadAdminData() {
-        // Загрузка данных раздачи
+        const DB = getDB();
         document.getElementById('adm-giveaway-active').checked = DB.giveaway.isActive;
         document.getElementById('adm-giveaway-start').value = DB.giveaway.startDate;
         document.getElementById('adm-giveaway-end').value = DB.giveaway.endDate;
 
-        // Рендер ключей
         const keysList = document.getElementById('adm-keys-list');
         keysList.innerHTML = '';
         DB.keys.forEach((k, index) => {
             keysList.innerHTML += `
                 <div class="data-item">
-                    <span>${k.code} ${k.isUsed ? `(Использован: ${k.usedBy})` : '(Свободен)'} ${k.isBlocked ? '❌ [БЛОК]' : ''}</span>
-                    <button onclick="toggleBlockKey(${index})" style="background:#cc3333; color:#fff; font-size:10px; border:none; padding:2px 5px; cursor:pointer;">
+                    <span>${k.code} ${k.isUsed ? `(Юзер: ${k.usedBy})` : '(Свободен)'} ${k.isBlocked ? '❌ [БЛОК]' : ''}</span>
+                    <button onclick="toggleBlockKey(${index})" style="background:#cc3333; color:#fff; font-size:10px; border:none; padding:4px 8px; cursor:pointer;">
                         ${k.isBlocked ? 'Разблок' : 'Блок'}
                     </button>
                 </div>
             `;
         });
 
-        // Рендер юзеров
         const usersList = document.getElementById('adm-users-list');
         usersList.innerHTML = '';
         DB.users.forEach((u, index) => {
-            if (u.username === 'admin') return; // Себя не трогаем
+            if (u.username === 'admin') return; 
             usersList.innerHTML += `
                 <div class="data-item">
-                    <span>${u.username} ${u.activatedKey ? `🔑` : 'Нет ключа'} ${u.isBlocked ? '❌ [БАН]' : ''}</span>
-                    <button onclick="toggleBlockUser(${index})" style="background:#cc3333; color:#fff; font-size:10px; border:none; padding:2px 5px; cursor:pointer;">
-                        ${u.isBlocked ? 'Разбанить' : 'Бан'}
+                    <span><strong>${u.username}</strong> ${u.activatedKey ? `🔑` : '✖'} ${u.isBlocked ? `<span class='err'>[БАН: ${u.banReason}]</span>` : ''}</span>
+                    <button onclick="openBanEdit(${index})" style="background:#cc3333; color:#fff; font-size:10px; border:none; padding:4px 8px; cursor:pointer;">
+                        Управление
                     </button>
                 </div>
             `;
         });
     }
 
+    // Перехват клика на открытие админки для генерации списков
+    const originalOpenModal = openModal;
+    openModal = function(id) {
+        if (id === 'admin-modal') loadAdminData();
+        originalOpenModal(id);
+    }
+
     function saveAdminGiveaway() {
+        let DB = getDB();
         DB.giveaway.isActive = document.getElementById('adm-giveaway-active').checked;
         DB.giveaway.startDate = document.getElementById('adm-giveaway-start').value;
         DB.giveaway.endDate = document.getElementById('adm-giveaway-end').value;
-        saveDB();
+        saveDB(DB);
         updateUI();
-        alert('Параметры раздачи обновлены!');
+        alert('Параметры раздачи изменены.');
     }
 
     function addAdminKey() {
         const input = document.getElementById('adm-new-key');
         const code = input.value.trim().toUpperCase();
         if (!code) return;
+        let DB = getDB();
         DB.keys.push({ code: code, isBlocked: false, isUsed: false, usedBy: null });
-        saveDB();
+        saveDB(DB);
         input.value = '';
         loadAdminData();
     }
 
     function toggleBlockKey(index) {
+        let DB = getDB();
         DB.keys[index].isBlocked = !DB.keys[index].isBlocked;
-        saveDB();
+        saveDB(DB);
         loadAdminData();
     }
 
-    function toggleBlockUser(index) {
-        DB.users[index].isBlocked = !DB.users[index].isBlocked;
-        saveDB();
+    function openBanEdit(index) {
+        const DB = getDB();
+        const user = DB.users[index];
+        document.getElementById('ban-edit-index').value = index;
+        document.getElementById('ban-edit-status').value = user.isBlocked.toString();
+        document.getElementById('ban-edit-reason').value = user.banReason || "";
+        openModal('ban-edit-modal');
+    }
+
+    function saveUserBanStatus() {
+        const index = document.getElementById('ban-edit-index').value;
+        const status = document.getElementById('ban-edit-status').value === "true";
+        const reason = document.getElementById('ban-edit-reason').value.trim();
+
+        let DB = getDB();
+        DB.users[index].isBlocked = status;
+        DB.users[index].banReason = status ? (reason || "Нарушение правил.") : "";
+        
+        saveDB(DB);
+        closeModal('ban-edit-modal');
         loadAdminData();
         updateUI();
     }
